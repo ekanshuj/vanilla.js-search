@@ -1,0 +1,19 @@
+header{
+  padding: 0.5em;
+}
+
+header > h1{
+  text-align: center;
+  font-size: 2.5rem;
+  font: bold;
+}
+
+header > input{
+  width: 100%;
+  height: 7vh;
+  font-size: 1.3rem;
+  padding: 0.5em;
+  text-align: center;
+  margin-top: 0.5rem;
+  outline: none;
+}
