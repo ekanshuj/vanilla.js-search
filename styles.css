@@ -1,14 +1,14 @@
-header{
+header {
   padding: 0.5em;
 }
 
-header > h1{
+header > h1 {
   text-align: center;
   font-size: 2.5rem;
   font: bold;
 }
 
-header > input{
+header > input {
   width: 100%;
   height: 7vh;
   font-size: 1.3rem;
@@ -16,4 +16,9 @@ header > input{
   text-align: center;
   margin-top: 0.5rem;
   outline: none;
+}
+
+#div-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
 }

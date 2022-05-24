@@ -1,50 +1,47 @@
-const cards = document.getElementById('div-cards');
+
+//Selectors.
+const output = document.getElementById('div-cards');
 const search = document.getElementById('search');
-let castCharacters = [];
+
+// initialise empty array to access api globally.
+let hpCharacters = [];
 
 
-//fetch request
-const fetchedData = () => {
-  try {
-    fetch('https://hp-api.herokuapp.com/api/characters')
-      .then((res) => res.json())
-      .then((castCharacters) => {
-        outputData(castCharacters);
-        // console.log(castCharacters);
-      })
-  }
-  catch (err) {
-    console.error(err);
-  }
-};
-fetchedData();
-
-// displayed fetched data
-const outputData = (characters) => {
-  let cardData = '';
-  characters.map((elem) => {
-    data = `
-        <div class="cards d-inline-block mt-5">
-        <div class="card bg-dark text-light" style="width: 18rem;">
-          <img src="${elem.image}" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">${elem.name}</h5>
-            <h6 class="card-title">Played by - ${elem.actor}</h6>
-          </div>
-        </div>
-      </div>
-    `
-    cardData += data;
+//Search Listener using filter() to get data.
+search.addEventListener('keyup', (elem) => {
+  const searchItem = elem.target.value.toLowerCase();
+  const filteredData = hpCharacters.filter((character) => {
+    return character.name.toLowerCase().includes(searchItem.toLowerCase());
   });
-  // .join('');
-  cards.innerHTML = cardData;
+  getData(filteredData);
+})
+
+
+
+//Access data from the api.
+const loadData = async () => {
+  const data = await fetch('https://hp-api.herokuapp.com/api/characters');
+  hpCharacters = await data.json();
+  getData(hpCharacters);
+  // console.log(characters);
+
 }
 
-//search filter implementation
-search.addEventListener('keyup', (e) => {
-  const filteredSearch = e.target.value;
-  const filteredData = castCharacters.filter((elem) => {
-    return elem.name.toLowerCase().includes(filteredSearch) || elem.actor.toLowerCase().includes(filteredSearch);
+
+//Display api data.
+const getData = (hpCharacters) => {
+  let cardData = '';
+  hpCharacters.map((characters) => {
+    let card = `<div class='card' style="height:350px;display:inline-flex;align-items:center;justify-content:center;flex-direction:column;border:2px solid black;">
+                    <img style="height:250px;width:200px;" src="${characters.image}">
+                    <h3>${characters.name}</h3>
+                  </div>`;
+    cardData += card;
   })
-  outputData(filteredData);
-})
+  output.innerHTML = cardData;
+}
+
+
+//Call api data.
+loadData()
+
